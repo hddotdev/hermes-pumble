@@ -90,7 +90,7 @@ def _author_id(message: dict[str, Any]) -> str:
     author = message.get("user") or message.get("author") or message.get("sender")
     if isinstance(author, dict):
         return str(_first(author, "id", "userId", "user_id", default=""))
-    return str(_first(message, "userId", "user_id", "authorId", "senderId", default=""))
+    return str(_first(message, "userId", "user_id", "authorId", "senderId", "author", default=""))
 
 
 def _author_name(message: dict[str, Any]) -> str:

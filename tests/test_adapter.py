@@ -45,6 +45,7 @@ class PumbleClientTests(unittest.TestCase):
             self.assertEqual(channels[0]["id"], "c1")
             self.assertEqual(_message_text(messages[0]), "hello")
             self.assertEqual(_author_id(messages[0]), "u1")
+            self.assertEqual(_author_id({"author": "u2"}), "u2")
             self.assertEqual(sent, "m2")
             self.assertEqual(http.calls[0][2]["ApiKey"], "secret")
             self.assertEqual(http.calls[-1][3]["json"], {"channelId": "c1", "text": "reply", "asBot": False})
