@@ -273,8 +273,15 @@ class PumbleAdapter(BasePlatformAdapter):
                 self._seen.add(mid)
                 if not text or (self.user_id and _author_id(message) == self.user_id):
                     continue
-                if self.require_mention and self.mention not in text.lower():
-                    continue
+                if self.require_mention:
+                    mention_tokens = {
+                        self.mention,
+                        f"<<@{self.user_id}>>" if self.user_id else "",
+                        f"<@{self.user_id}>" if self.user_id else "",
+                        f"@{self.user_id}" if self.user_id else "",
+                    }
+                    if not any(token and token in text.lower() for token in mention_tokens):
+                        continue
                 await self._dispatch_message(channel, message, text)
 
     async def _dispatch_message(self, channel: dict[str, Any], message: dict[str, Any], text: str) -> None:
