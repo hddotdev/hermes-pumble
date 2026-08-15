@@ -1,0 +1,51 @@
+name: pumble-platform
+label: Pumble
+kind: platform
+version: 0.1.0
+description: >
+  Pumble API-key polling gateway adapter for Hermes Agent. Reads Pumble
+  channels and sends Hermes replies through the Pumble API Key addon.
+author: hdsysdev
+requires_env:
+  - name: PUMBLE_API_KEY
+    description: "Pumble API Key addon key"
+    prompt: "Pumble API key"
+    url: "https://pumble.com/api"
+    password: true
+optional_env:
+  - name: PUMBLE_CHANNELS
+    description: "Comma-separated Pumble channel IDs or names to monitor; empty means public channels"
+    prompt: "Channels to monitor (optional)"
+    password: false
+  - name: PUMBLE_HOME_CHANNEL
+    description: "Default channel ID or name for cron and notification delivery"
+    prompt: "Home channel (optional)"
+    password: false
+  - name: PUMBLE_ALLOWED_USERS
+    description: "Comma-separated Pumble user IDs allowed to talk to Hermes"
+    prompt: "Allowed users (optional)"
+    password: false
+  - name: PUMBLE_ALLOW_ALL_USERS
+    description: "Allow any monitored Pumble user to trigger Hermes"
+    prompt: "Allow all users? (true/false)"
+    password: false
+  - name: PUMBLE_INCLUDE_DMS
+    description: "Include direct-message channels in polling (default: false)"
+    prompt: "Include DMs? (true/false)"
+    password: false
+  - name: PUMBLE_REQUIRE_MENTION
+    description: "In channels, respond only when Hermes is mentioned (default: true)"
+    prompt: "Require @mention in channels? (true/false)"
+    password: false
+  - name: PUMBLE_POLL_SECONDS
+    description: "Polling interval in seconds (default: 5)"
+    prompt: "Polling interval"
+    password: false
+  - name: PUMBLE_API_URL
+    description: "Pumble API base URL"
+    prompt: "Pumble API URL"
+    password: false
+  - name: PUMBLE_USER_ID
+    description: "Authenticated Pumble user ID, used to ignore the bot's own messages"
+    prompt: "Pumble user ID (optional)"
+    password: false
