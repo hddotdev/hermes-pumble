@@ -46,13 +46,27 @@ def _get_secret(name: str) -> str:
 
 def _items(payload: Any, *keys: str) -> list[dict[str, Any]]:
     if isinstance(payload, list):
-        return [item for item in payload if isinstance(item, dict)]
-    if isinstance(payload, dict):
+        values = payload
+    elif isinstance(payload, dict):
+        values = []
         for key in keys:
             value = payload.get(key)
             if isinstance(value, list):
-                return [item for item in value if isinstance(item, dict)]
-    return []
+                values = value
+                break
+    else:
+        values = []
+
+    # Pumble's listChannels endpoint returns wrappers such as
+    # {"channel": {...}, "users": [...]}; other endpoints return flat
+    # objects. Normalize both forms at the API boundary.
+    result: list[dict[str, Any]] = []
+    for item in values:
+        if not isinstance(item, dict):
+            continue
+        nested = item.get("channel") or item.get("message")
+        result.append(nested if isinstance(nested, dict) else item)
+    return result
 
 
 def _first(data: dict[str, Any], *keys: str, default: Any = "") -> Any:

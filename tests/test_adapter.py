@@ -59,6 +59,7 @@ class PumbleClientTests(unittest.TestCase):
                     "PUMBLE_API_KEY": "secret",
                     "PUMBLE_USER_ID": "bot",
                     "PUMBLE_INCLUDE_DMS": "false",
+                    "PUMBLE_CHANNELS": "c1",
                 })
                 # A real Hermes plugin registers its platform before the
                 # adapter is constructed; mirror that registry contract here.
