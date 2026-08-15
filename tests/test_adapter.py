@@ -47,7 +47,7 @@ class PumbleClientTests(unittest.TestCase):
             self.assertEqual(_author_id(messages[0]), "u1")
             self.assertEqual(sent, "m2")
             self.assertEqual(http.calls[0][2]["ApiKey"], "secret")
-            self.assertEqual(http.calls[-1][3]["json"], {"channelId": "c1", "text": "reply"})
+            self.assertEqual(http.calls[-1][3]["json"], {"channelId": "c1", "text": "reply", "asBot": False})
 
         asyncio.run(run())
 

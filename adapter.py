@@ -138,7 +138,7 @@ class PumbleClient:
         return _items(payload, "messages", "data")
 
     async def send_message(self, channel_id: str, text: str) -> str:
-        payload = await self.request("POST", "/sendMessage", json={"channelId": channel_id, "text": text})
+        payload = await self.request("POST", "/sendMessage", json={"channelId": channel_id, "text": text, "asBot": False})
         if isinstance(payload, dict):
             return str(_first(payload, "id", "messageId", default=""))
         return ""
