@@ -303,11 +303,21 @@ class PumbleAdapter(BasePlatformAdapter):
         )
         await self.handle_message(event)
 
+    def _resolve_channel_id(self, chat_id: str) -> str:
+        """Accept either a Pumble channel ID or configured channel name."""
+        raw = str(chat_id)
+        if raw in self._channels:
+            return raw
+        for channel in self._channels.values():
+            if self._channel_name(channel) == raw:
+                return self._channel_id(channel)
+        return raw
+
     async def send(self, chat_id, content, reply_to=None, metadata=None):
         if not self.client:
             return SendResult(success=False, error="Pumble adapter is not connected", retryable=True)
         try:
-            message_id = await self.client.send_message(str(chat_id), str(content))
+            message_id = await self.client.send_message(self._resolve_channel_id(str(chat_id)), str(content))
             if message_id:
                 self._seen.add(message_id)
             return SendResult(success=True, message_id=message_id or None)

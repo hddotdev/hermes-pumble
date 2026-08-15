@@ -70,6 +70,7 @@ class PumbleClientTests(unittest.TestCase):
                 adapter._channels = {"c1": {"id": "c1", "name": "general", "channelType": "PUBLIC"}}
                 await adapter._bootstrap_seen()
                 self.assertIn("m1", adapter._seen)
+                self.assertEqual(adapter._resolve_channel_id("general"), "c1")
                 self.assertEqual(_created_at({"createdAt": "2026-01-01T00:00:00Z"}).year, 2026)
             finally:
                 os.environ.clear()
